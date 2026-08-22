@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bright & Vibrant English Exam - Unit 1</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-gradient: linear-gradient(135deg, #f0f4ff 0%, #e8eefd 100%);
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --primary: #4f46e5;
+            --primary-light: #e0e7ff;
+            --secondary: #0ea5e9;
+            --accent-orange: #f97316;
+            --accent-purple: #8b5cf6;
+            --accent-pink: #ec4899;
+            --success: #10b981;
+            --success-light: #d1fae5;
+            --error: #ef4444;
+            --error-light: #fee2e2;
+            --border-color: #e2e8f0;
+            --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            --shadow-lg: 0 10px 25px -5px rgba(79, 70, 229, 0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: var(--bg-gradient);
+            color: var(--text-main);
+            padding: 30px 15px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .exam-container {
+            width: 100%;
+            max-width: 850px;
+        }
+
+        /* Top Sticky Header */
+        .sticky-header {
+            position: sticky;
+            top: 15px;
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(12px);
+            padding: 16px 24px;
+            border-radius: 20px;
+            border: 2px solid #e0e7ff;
+            box-shadow: var(--shadow-lg);
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .exam-title h2 {
+            font-size: 1.25rem;
+            font-weight: 800;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .exam-title p {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        /* Audio Controls Bar */
+        .audio-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: #f8fafc;
+            padding: 8px 16px;
+            border-radius: 30px;
+            border: 1px solid var(--border-color);
+        }
+
+        .control-group {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--text-muted);
+        }
+
+        .control-group input[type="range"] {
+            width: 70px;
+            accent-color: var(--primary);
+            cursor: pointer;
+        }
+
+        .control-group span {
+            min-width: 32px;
+            color: var(--primary);
+        }
+
+        .score-badge {
+            background: linear-gradient(135deg, var(--primary), var(--accent-purple));
+            color: white;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-weight: 800;
+            font-size: 0.95rem;
+            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+        }
+
+        /* Platform Question Cards with Distinct Colorful Borders */
+        .card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 28px;
+            margin-bottom: 25px;
+            border: 2px solid transparent;
+            box-shadow: var(--shadow-sm);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* Distinct Accent Colors per Question Module */
+        .card:nth-child(1) { border-color: #c7d2fe; border-top: 6px solid var(--primary); }
+        .card:nth-child(2) { border-color: #bae6fd; border-top: 6px solid var(--secondary); }
+        .card:nth-child(3) { border-color: #fed7aa; border-top: 6px solid var(--accent-orange); }
+        .card:nth-child(4) { border-color: #ddd6fe; border-top: 6px solid var(--accent-purple); }
+        .card:nth-child(5) { border-color: #fbcfe8; border-top: 6px solid var(--accent-pink); }
+        .card:nth-child(6) { border-color: #a7f3d0; border-top: 6px solid var(--success); }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px dashed #f1f5f9;
+        }
+
+        .card-header-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-header h3 {
+            font-size: 1.15rem;
+            color: var(--text-main);
+            font-weight: 800;
+        }
+
+        .marks-tag {
+            background: #f1f5f9;
+            color: var(--text-main);
+            font-size: 0.8rem;
+            font-weight: 800;
+            padding: 6px 14px;
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+        }
+
+        /* Play Sound Buttons */
+        .audio-btn {
+            background: #eef2ff;
+            border: 1px solid #c7d2fe;
+            color: var(--primary);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+        }
+
+        .audio-btn:hover {
+            background: var(--primary);
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .audio-btn svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+
+        .item-audio-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        /* Inputs & Textareas */
+        input[type="text"], textarea {
+            font-family: inherit;
+            width: 100%;
+            padding: 12px 16px;
+            border-radius: 12px;
+            border: 2px solid var(--border-color);
+            font-size: 0.95rem;
+            font-weight: 600;
+            outline: none;
+            transition: all 0.2s;
+            margin-top: 6px;
+            background: #f8fafc;
+            color: var(--text-main);
+        }
+
+        input[type="text"]:focus, textarea:focus {
+            border-color: var(--primary);
+            background: #ffffff;
+            box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.15);
+        }
+
+        .inline-input {
+            width: 180px !important;
+            display: inline-block;
+            padding: 6px 12px !important;
+            margin: 0 5px;
+        }
+
+        /* Multiple Choice Option Grid */
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+            margin-top: 12px;
+        }
+
+        .option-btn {
+            background: #f8fafc;
+            border: 2px solid var(--border-color);
+            padding: 14px 16px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 700;
+            color: var(--text-main);
+            text-align: left;
+            transition: all 0.2s ease;
+        }
+
+        .option-btn:hover {
+            border-color: var(--primary);
+            background: var(--primary-light);
+            color: var(--primary);
+        }
+
+        .option-btn.selected {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25);
+        }
+
+        /* Word Bank Component */
+        .word-bank {
+            background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
+            color: #0369a1;
+            border: 2px dashed #0284c7;
+            padding: 14px 20px;
+            border-radius: 14px;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 20px;
+            letter-spacing: 0.5px;
+        }
+
+        /* Reading Passage Box */
+        .reading-box {
+            background: #f8fafc;
+            padding: 22px;
+            border-radius: 14px;
+            border-left: 5px solid var(--accent-orange);
+            line-height: 1.8;
+            margin-bottom: 20px;
+            font-size: 0.98rem;
+            color: #334155;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+        }
+
+        .dialogue-row {
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .speaker {
+            font-weight: 800;
+            color: var(--primary);
+            min-width: 80px;
+        }
+
+        /* Submit Button */
+        .submit-btn {
+            width: 100%;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent-purple) 100%);
+            color: white;
+            font-size: 1.15rem;
+            font-weight: 800;
+            padding: 18px;
+            border: none;
+            border-radius: 16px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 6px 20px rgba(79, 70, 229, 0.35);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(79, 70, 229, 0.45);
+        }
+
+        /* Correction Feedback Styles */
+        .correct-bg {
+            background-color: var(--success-light) !important;
+            border-color: var(--success) !important;
+            color: #065f46 !important;
+        }
+
+        .wrong-bg {
+            background-color: var(--error-light) !important;
+            border-color: var(--error) !important;
+            color: #991b1b !important;
+        }
+
+        .feedback-text {
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-top: 4px;
+            display: block;
+        }
+        .feedback-text.correct { color: var(--success); }
+        .feedback-text.wrong { color: var(--error); }
+    </style>
+</head>
+<body>
+
+<div class="exam-container">
+
+    <!-- Header & Audio Controls Bar -->
+    <div class="sticky-header">
+        <div class="exam-title">
+            <h2>General Test - Unit 1</h2>
+            <p>Grade 9 (Prep 3) • Interactive Platform</p>
+        </div>
+
+        <div class="audio-controls">
+            <div class="control-group">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M13 2.05v3.03c3.39.49 6 3.39 6 6.92 0 .9-.18 1.75-.5 2.54l2.29 2.29c1.42-1.42 2.21-3.32 2.21-5.33 0-4.97-3.6-9.1-8.5-9.45zM12 4L7 9H3v6h4l5 5V4zm6.5 8c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
+                <input type="range" id="volumeSlider" min="0" max="1" step="0.1" value="1" oninput="updateAudioLabels()">
+                <span id="volVal">100%</span>
+            </div>
+
+            <div class="control-group">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.38 8.57l-1.23 1.85a8 8 0 0 1-.22 7.58H5.07A8 8 0 0 1 15.58 6.85l1.85-1.23A10 10 0 0 0 3.35 19a2 2 0 0 0 1.72 1h13.86a2 2 0 0 0 1.72-1 10 10 0 0 0-.27-10.43zM10.5 12a1.5 1.5 0 1 0 1.5 1.5A1.5 1.5 0 0 0 10.5 12z"/></svg>
+                <input type="range" id="rateSlider" min="0.5" max="1.5" step="0.1" value="0.9" oninput="updateAudioLabels()">
+                <span id="rateVal">0.9x</span>
+            </div>
+        </div>
+
+        <div class="score-badge" id="scoreDisplay">Score: -- / 20</div>
+    </div>
+
+    <form id="examForm">
+
+        <!-- Q1: Dialogue -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-header-left">
+                    <h3>1. Complete the Dialogue</h3>
+                    <button type="button" class="audio-btn" onclick="speakText('Complete the following dialogue. Two students are talking about self discovery.')" title="Listen Title">
+                        <svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+                    </button>
+                </div>
+                <span class="marks-tag">5 Marks</span>
+            </div>
+            <p style="color: var(--text-muted); margin-bottom: 15px; font-weight: 600;">Two students are talking about self-discovery:</p>
+            
+            <div class="dialogue-row">
+                <button type="button" class="audio-btn" onclick="speakText('Ahmed asks: How would you describe your identity?')" title="Listen">
+                    <svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
+                </button>
+                <span class="speaker">Ahmed:</span> How would you describe your identity?
+            </div>
+            <div class="dialogue-row">
+                <button type="button" class="audio-btn" onclick="speakText('Shereen says: Identity is your values, personality and dreams.')" title="Listen">
+                    <svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
+                </button>
+                <span class="speaker">Shereen:</span> Identity is your values, personality and dreams.
+            </div>
+            
+            <div class="dialogue-row" style="flex-wrap: wrap;">
+                <span class="speaker">Ahmed (1):</span>
+                <input type="text" data-answer="what changed your mind|how did you realize that|why" placeholder="Type Ahmed's question...">
+            </div>
+
+            <div class="dialogue-row">
+                <button type="button" class="audio-btn" onclick="speakText('Shereen says: I thought being quiet was weak, but now it is my strength.')" title="Listen">
+                    <svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
+                </button>
+                <span class="speaker">Shereen:</span> I thought being quiet was weak, but now it is my strength.
+            </div>
+
+            <div class="dialogue-row">
+                <button type="button" class="audio-btn" onclick="speakText('Ahmed asks: What influenced your growth the most?')" title="Listen">
+                    <svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
+                </button>
+                <span class="speaker">Ahmed:</span> What influenced your growth the most?
+            </div>
+            <div class="dialogue-row" style="flex-wrap: wrap;">
+                <span class="speaker">Shereen (2):</span>
+                <input type="text" data-answer="my experience|challenges|learning" placeholder="Type Shereen's response...">
+            </div>
+
+            <div class="dialogue-row" style="flex-wrap: wrap;">
+                <span class="speaker">Ahmed (3):</span>
+                <input type="text" data-answer="what does being real mean|what do you mean" placeholder="Type Ahmed's question...">
+            </div>
+            <div class="dialogue-row">
+                <button type="button" class="audio-btn" onclick="speakText('Shereen says: Being real means showing who I really am.')" title="Listen">
+                    <svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
+                </button>
+                <span class="speaker">Shereen:</span> Being real means showing who I really am.
+            </div>
+
+            <div class="dialogue-row" style="flex-wrap: wrap;">
+                <span class="speaker">Ahmed (4):</span>
+                <input type="text" data-answer="what is your advice|what advice" placeholder="Type Ahmed's question...">
+            </div>
+            <div class="dialogue-row">
+                <button type="button" class="audio-btn" onclick="speakText('Shereen says: Be patient with yourself.')" title="Listen">
+                    <svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
+                </button>
+                <span class="speaker">Shereen:</span> Be patient with yourself.
+            </div>
+
+            <div class="dialogue-row" style="flex-wrap: wrap;">
+                <span class="speaker">Ahmed (5):</span>
+                <input type="text" data-answer="thank you|great advice|i agree" placeholder="Type Ahmed's response...">
+            </div>
+        </div>
+
+        <!-- Q2: Fill in the Blanks -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-header-left">
+                    <h3>2. Complete the Text</h3>
+                    <button type="button" class="audio-btn" onclick="speakText('Complete the text with words from the list: Doctor, patients, Aswan, has saved.')" title="Listen Question">
+                        <svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+                    </button>
+                </div>
+                <span class="marks-tag">4 Marks</span>
+            </div>
+            <div class="word-bank">
+                has saved • doctor • hospital • patients • Aswan • has been saved
+            </div>
+            <p style="line-height: 2.2; font-weight: 500;">
+                Dr. Magdi Yacoub is a famous 
+                <input type="text" class="inline-input" data-answer="doctor" placeholder="(1)">
+                from Egypt. He worked for many years in London and helped thousands of 
+                <input type="text" class="inline-input" data-answer="patients" placeholder="(2)">.
+                He has built a special center for children in 
+                <input type="text" class="inline-input" data-answer="Aswan" placeholder="(3)">.
+                Many people love him because he 
+                <input type="text" class="inline-input" data-answer="has saved" placeholder="(4)">
+                lives and given hope to families.
+            </p>
+        </div>
+
+        <!-- Q3: Reading Comprehension -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-header-left">
+                    <h3>3. Reading Comprehension</h3>
+                    <button type="button" class="audio-btn" onclick="speakText(document.getElementById('passageText').innerText)" title="Listen Passage">
+                        <svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+                    </button>
+                </div>
+                <span class="marks-tag">3 Marks</span>
+            </div>
+            <div class="reading-box" id="passageText">
+                On the first day of Grade 9, Nour stood nervously in front of the mirror, fixing her blazer again and again. She felt different from her classmates and kept silent during the lessons. Her only comfort was her sketchbook, where she loved to draw. Drawing made her feel calm and safe. One afternoon, her teacher asked the class to design an Identity Map. Nour decided to draw herself, her family, her values, and her dream. When she presented it, the class clapped loudly. She learned that being different was her true strength.
+            </div>
+
+            <div class="item-audio-row">
+                <button type="button" class="audio-btn" onclick="speakText('Question 1: The main idea of the text is')" title="Listen">
+                    <svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
+                </button>
+                <p><strong>1. The main idea of the text is:</strong></p>
+            </div>
+            <div class="options-grid" data-q="q3_1" data-correct="Strength in difference">
+                <button type="button" class="option-btn" onclick="speakText('First day')">First day</button>
+                <button type="button" class="option-btn" onclick="speakText('Teachers task')">Teacher's task</button>
+                <button type="button" class="option-btn" onclick="speakText('Strength in difference')">Strength in difference</button>
+                <button type="button" class="option-btn" onclick="speakText('New blazer')">New blazer</button>
+            </div>
+
+            <div class="item-audio-row">
+                <button type="button" class="audio-btn" onclick="speakText('Question 2: The teacher asked students to')" title="Listen">
+                    <svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
+                </button>
+                <p><strong>2. The teacher asked students to:</strong></p>
+            </div>
+            <div class="options-grid" data-q="q3_2" data-correct="Design Identity Map">
+                <button type="button" class="option-btn" onclick="speakText('Write story')">Write story</button>
+                <button type="button" class="option-btn" onclick="speakText('Draw map')">Draw map</button>
+                <button type="button" class="option-btn" onclick="speakText('Design Identity Map')">Design Identity Map</button>
+                <button type="button" class="option-btn" onclick="speakText('Paint city')">Paint city</button>
+            </div>
+        </div>
+
+        <!-- Q4: Multiple Choice (Vocabulary) -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-header-left">
+                    <h3>4. Vocabulary & Choice</h3>
+                    <button type="button" class="audio-btn" onclick="speakText('Vocabulary and Choice questions.')" title="Listen Header">
+                        <svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+                    </button>
+                </div>
+                <span class="marks-tag">4 Marks</span>
+            </div>
+
+            <div class="item-audio-row">
+                <button type="button" class="audio-btn" onclick="speakText('The word individuality means')" title="Listen">
+                    <svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
+                </button>
+                <p><strong>1. The word "individuality" means:</strong></p>
+            </div>
+            <div class="options-grid" data-q="q4_1" data-correct="uniqueness">
+                <button type="button" class="option-btn" onclick="speakText('weakness')">weakness</button>
+                <button type="button" class="option-btn" onclick="speakText('uniqueness')">uniqueness</button>
+                <button type="button" class="option-btn" onclick="speakText('sadness')">sadness</button>
+                <button type="button" class="option-btn" onclick="speakText('mistake')">mistake</button>
+            </div>
+
+            <div class="item-audio-row">
+                <button type="button" class="audio-btn" onclick="speakText('The antonym of confidence is')" title="Listen">
+                    <svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
+                </button>
+                <p><strong>2. The antonym of "confidence" is:</strong></p>
+            </div>
+            <div class="options-grid" data-q="q4_2" data-correct="fear">
+                <button type="button" class="option-btn" onclick="speakText('courage')">courage</button>
+                <button type="button" class="option-btn" onclick="speakText('strength')">strength</button>
+                <button type="button" class="option-btn" onclick="speakText('fear')">fear</button>
+                <button type="button" class="option-btn" onclick="speakText('respect')">respect</button>
+            </div>
+
+            <div class="item-audio-row">
+                <button type="button" class="audio-btn" onclick="speakText('The prefix self in self discovery means')" title="Listen">
+                    <svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
+                </button>
+                <p><strong>3. The prefix "self-" in "self-discovery" means:</strong></p>
+            </div>
+            <div class="options-grid" data-q="q4_3" data-correct="personal">
+                <button type="button" class="option-btn" onclick="speakText('others')">others</button>
+                <button type="button" class="option-btn" onclick="speakText('personal')">personal</button>
+                <button type="button" class="option-btn" onclick="speakText('shared')">shared</button>
+                <button type="button" class="option-btn" onclick="speakText('free')">free</button>
+            </div>
+
+            <div class="item-audio-row">
+                <button type="button" class="audio-btn" onclick="speakText('The word strength means')" title="Listen">
+                    <svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
+                </button>
+                <p><strong>4. The word "strength" means:</strong></p>
+            </div>
+            <div class="options-grid" data-q="q4_4" data-correct="power">
+                <button type="button" class="option-btn" onclick="speakText('power')">power</button>
+                <button type="button" class="option-btn" onclick="speakText('fear')">fear</button>
+                <button type="button" class="option-btn" onclick="speakText('sadness')">sadness</button>
+                <button type="button" class="option-btn" onclick="speakText('kindness')">kindness</button>
+            </div>
+        </div>
+
+        <!-- Q5: Grammar Corrections -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-header-left">
+                    <h3>5. Grammar Corrections</h3>
+                    <button type="button" class="audio-btn" onclick="speakText('Grammar corrections. Correct the words in brackets.')" title="Listen Header">
+                        <svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+                    </button>
+                </div>
+                <span class="marks-tag">2 Marks</span>
+            </div>
+            <div class="dialogue-row" style="margin-bottom: 12px; flex-wrap: wrap;">
+                <button type="button" class="audio-btn" onclick="speakText('Leila has learn a lot about her identity this year.')" title="Listen">
+                    <svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
+                </button>
+                <span>1. Leila has (learn)</span> 
+                <input type="text" class="inline-input" data-answer="learned|learnt" placeholder="Correct word"> 
+                <span>a lot about her identity this year.</span>
+            </div>
+            <div class="dialogue-row" style="flex-wrap: wrap;">
+                <button type="button" class="audio-btn" onclick="speakText('Many students have helped by supportive teachers.')" title="Listen">
+                    <svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
+                </button>
+                <span>2. Many students (have)</span> 
+                <input type="text" class="inline-input" data-answer="have been" placeholder="Correct word"> 
+                <span>helped by supportive teachers.</span>
+            </div>
+        </div>
+
+        <!-- Q6: Writing Essay -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-header-left">
+                    <h3>6. Paragraph Writing</h3>
+                    <button type="button" class="audio-btn" onclick="speakText('Write about 100 words on the topic: How values shape identity')" title="Listen Topic">
+                        <svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+                    </button>
+                </div>
+                <span class="marks-tag">2 Marks</span>
+            </div>
+            <p style="margin-bottom: 10px; font-weight: 700; color: var(--primary);">Topic: "How values shape identity"</p>
+            <textarea rows="5" placeholder="Write your paragraph here (around 100 words)..."></textarea>
+        </div>
+
+        <button type="button" class="submit-btn" id="submitBtn">Submit Exam & Check Results</button>
+    </form>
+</div>
+
+<script>
+    // Audio Sliders Controls & Labels Update
+    function updateAudioLabels() {
+        const vol = document.getElementById('volumeSlider').value;
+        const rate = document.getElementById('rateSlider').value;
+        document.getElementById('volVal').textContent = Math.round(vol * 100) + '%';
+        document.getElementById('rateVal').textContent = parseFloat(rate).toFixed(1) + 'x';
+    }
+
+    // Advanced Text-To-Speech (Prioritizing Google US English Voice)
+    function speakText(text) {
+        if ('speechSynthesis' in window) {
+            window.speechSynthesis.cancel(); // Stop any currently playing audio
+
+            const utterance = new SpeechSynthesisUtterance(text);
+            const volume = parseFloat(document.getElementById('volumeSlider').value);
+            const rate = parseFloat(document.getElementById('rateSlider').value);
+
+            utterance.volume = volume;
+            utterance.rate = rate;
+            utterance.lang = 'en-US';
+
+            const voices = window.speechSynthesis.getVoices();
+            
+            // Priority 1: Google US English Voice
+            // Priority 2: Any Natural/US English Voice
+            // Priority 3: Fallback English Voice
+            let selectedVoice = voices.find(v => v.name.includes('Google') && (v.lang === 'en-US' || v.lang === 'en_US')) ||
+                                voices.find(v => v.lang === 'en-US' || v.lang === 'en_US') ||
+                                voices.find(v => v.lang.startsWith('en'));
+
+            if (selectedVoice) {
+                utterance.voice = selectedVoice;
+            }
+
+            window.speechSynthesis.speak(utterance);
+        } else {
+            alert("Text-to-speech is not supported in this browser.");
+        }
+    }
+
+    // Pre-load voices for Chrome / Safari compatibility
+    if ('speechSynthesis' in window) {
+        window.speechSynthesis.onvoiceschanged = () => {
+            window.speechSynthesis.getVoices();
+        };
+    }
+
+    // Option Selecting
+    document.querySelectorAll('.options-grid').forEach(grid => {
+        const buttons = grid.querySelectorAll('.option-btn');
+        buttons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                buttons.forEach(b => b.classList.remove('selected'));
+                btn.classList.add('selected');
+            });
+        });
+    });
+
+    // Auto Correction Engine
+    document.getElementById('submitBtn').addEventListener('click', () => {
+        let score = 0;
+        let total = 0;
+
+        // Check Text Inputs
+        const textInputs = document.querySelectorAll('input[data-answer]');
+        textInputs.forEach(input => {
+            total++;
+            const userAns = input.value.trim().toLowerCase();
+            const allowedAnswers = input.getAttribute('data-answer').toLowerCase().split('|');
+
+            const parent = input.parentElement;
+            const oldFb = parent.querySelector('.feedback-text');
+            if (oldFb) oldFb.remove();
+
+            const isCorrect = allowedAnswers.some(ans => userAns.includes(ans) && userAns.length > 0);
+
+            if (isCorrect) {
+                score++;
+                input.classList.remove('wrong-bg');
+                input.classList.add('correct-bg');
+            } else {
+                input.classList.remove('correct-bg');
+                input.classList.add('wrong-bg');
+                
+                const fb = document.createElement('span');
+                fb.className = 'feedback-text wrong';
+                fb.textContent = `Expected: ${allowedAnswers[0]}`;
+                parent.appendChild(fb);
+            }
+        });
+
+        // Check Multiple Choice Questions
+        const choiceGrids = document.querySelectorAll('.options-grid[data-correct]');
+        choiceGrids.forEach(grid => {
+            total++;
+            const correctOption = grid.getAttribute('data-correct');
+            const selectedBtn = grid.querySelector('.option-btn.selected');
+
+            grid.querySelectorAll('.option-btn').forEach(btn => {
+                btn.disabled = true;
+                if (btn.textContent.trim() === correctOption) {
+                    btn.classList.add('correct-bg');
+                }
+            });
+
+            if (selectedBtn && selectedBtn.textContent.trim() === correctOption) {
+                score++;
+            } else if (selectedBtn) {
+                selectedBtn.classList.add('wrong-bg');
+            }
+        });
+
+        // Display Score
+        const scoreDisplay = document.getElementById('scoreDisplay');
+        scoreDisplay.textContent = `Score: ${score} / ${total}`;
+        scoreDisplay.style.background = score >= total * 0.7 ? 'linear-gradient(135deg, #10b981, #059669)' : 'linear-gradient(135deg, #ef4444, #dc2626)';
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+</script>
+
+</body>
+</html>
